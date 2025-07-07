@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Configure AWS Credentials
         run: |
-          if [ -z "${{ secrets.DEV_SECRET }}" ]; then
+          if [ -z "${{ secrets.DEV_SECRE }}" ]; then
             echo "❌ Missing secrets. Deployment aborted."
             exit 1
           fi
