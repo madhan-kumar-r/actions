@@ -9,5 +9,5 @@ jobs:
     environment:
       name: Dev
     steps:
-      - name: Deploy
-        run: echo "Deploying..."
+      - name: Use secret
+        run: echo "Deploying with token ${{ secrets.DEPLOY_TOKEN }}"
