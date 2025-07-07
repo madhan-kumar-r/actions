@@ -9,5 +9,11 @@ jobs:
     environment:
       name: Dev
     steps:
-      - name: Use secret
-        run: echo "Deploying with token ${{ secrets.DEPLOY_TOKEN }}"
+      - name: Configure AWS Credentials
+        run: |
+          if [ -z "${{ secrets.DEV_SECRET }}" ]; then
+            echo "❌ Missing secrets. Deployment aborted."
+            exit 1
+          fi
+          echo "DEV_SECRET=${{ secrets.DEV_SECRET }}" >> $GITHUB_ENV
+          
