@@ -6,6 +6,13 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: Dev
     steps:
-      - name: Deploy
-        run: echo "Deploying..."
+      - name: Configure AWS Credentials
+        run: |
+          if [ -z "${{ secrets.DEV_SECRET }}" ]; then
+            echo "❌ Missing secrets. Deployment aborted."
+            exit 1
+          fi
+          echo "DEV_SECRET=${{ secrets.DEV_SECRET }}" >> $GITHUB_ENV
