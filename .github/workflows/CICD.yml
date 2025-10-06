@@ -5,19 +5,25 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
+  # ----------------------
+  # Build Job
+  # ----------------------
   Build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
       - name: Compile
-        run: echo Hello, world!
-    
+        run: echo "Building the application..."
+
+  # ----------------------
+  # Deploy to Development
+  # ----------------------
   DeployDev:
-    name: Deploy to Dev 
-    if: github.event_name == 'pull_request'
+    name: Deploy to Development
     needs: [Build]
     runs-on: ubuntu-latest
     environment: 
@@ -25,28 +31,32 @@ jobs:
       url: 'http://dev.myapp.com'
     steps:
       - name: Deploy
-        run: echo I am deploying! 
-    
-  DeployStaging:
-    name: Deploy to Staging 
-    if: github.event.ref == 'refs/heads/main'
-    needs: [Build]
+        run: echo "Deploying to Development environment..."
+
+  # ----------------------
+  # Deploy to QA
+  # ----------------------
+  DeployQA:
+    name: Deploy to QA
+    needs: [DeployDev]
     runs-on: ubuntu-latest
-    environment: 
-      name: Staging
-      url: 'http://test.myapp.com'
+    environment:
+      name: QA
+      url: 'http://qa.myapp.com'
     steps:
       - name: Deploy
-        run: echo I am deploying! 
-            
-  DeployProd:
-    name: Deploy to Production 
-    needs: [DeployStaging]
+        run: echo "Deploying to QA environment..."
+
+  # ----------------------
+  # Deploy to Preview
+  # ----------------------
+  DeployPreview:
+    name: Deploy to Preview
+    needs: [DeployQA]
     runs-on: ubuntu-latest
-    environment: 
-      name: Production
-      url: 'http://www.myapp.com'
+    environment:
+      name: Preview
+      url: 'http://preview.myapp.com'
     steps:
       - name: Deploy
-        run: echo I am deploying! 
-    
+        run: echo "Deploying to Preview environment..."
