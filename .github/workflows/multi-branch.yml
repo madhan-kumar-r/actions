@@ -6,3 +6,8 @@ on:
       - Dev
       - Staging
       - Int
+
+jobs:
+  sync-envs:
+    name: Syncing to S3
+    runs-on: ubuntu-latest
