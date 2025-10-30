@@ -1,0 +1,8 @@
+name: Dev Envs Syncing to S3
+
+on:
+  push:
+    branches:
+      - Dev
+      - Staging
+      - Int
