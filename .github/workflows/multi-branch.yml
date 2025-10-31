@@ -1,19 +1,22 @@
-name: Dev Envs Syncing to S3
+name: Non-Prod Envs Syncing to S3
 
 on:
   push:
     branches:
-      - Dev
+      - Dev-1
+      - Qa
       - Staging
       - Int
 
 jobs:
   sync-envs:
-    name: Syncing to S3
+    name: Syncing to S3 (${{ github.ref_name }})
     runs-on: ubuntu-latest
+    environment: TTSP
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: Get branch name
+        id: extract_branch
+        run: |
+          BRANCH_NAME=${GITHUB_REF##*/}
+          echo "branch_name=${BRANCH_NAME,,}" >> $GITHUB_OUTPUT
