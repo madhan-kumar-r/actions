@@ -19,6 +19,15 @@ jobs:
         id: extract_branch
         run: |
           BRANCH_NAME=${GITHUB_REF##*/}
-          echo "Branch name: ${BRANCH_NAME,,}"
-          echo "branch_name=${BRANCH_NAME,,}" >> $GITHUB_OUTPUT
+      
+          # Lowercase version
+          LOWER_BRANCH=${BRANCH_NAME,,}
+      
+          # Print both to the logs
+          echo "Original branch name: $BRANCH_NAME"
+          echo "Lowercase branch name: $LOWER_BRANCH"
+      
+          # Save lowercase version as a step output
+          echo "branch_name=${LOWER_BRANCH}" >> $GITHUB_OUTPUT
+
 
