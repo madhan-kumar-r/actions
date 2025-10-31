@@ -19,4 +19,6 @@ jobs:
         id: extract_branch
         run: |
           BRANCH_NAME=${GITHUB_REF##*/}
+          echo "Branch name: ${BRANCH_NAME,,}"
           echo "branch_name=${BRANCH_NAME,,}" >> $GITHUB_OUTPUT
+
