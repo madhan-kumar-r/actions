@@ -1,5 +1,7 @@
 name: Deploy Service
 
+run-name: "Promote ${{ github.event.inputs.service }}"
+
 on:
   workflow_dispatch:
     inputs:
