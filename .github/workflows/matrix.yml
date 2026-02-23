@@ -1,0 +1,22 @@
+name: Deploy Lambda
+
+on:
+  workflow_dispatch:
+    inputs:
+      lambda_name:
+        description: "Lambda to deploy (or 'all')"
+        required: true
+        default: "all"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        lambda:
+          - lambda-a
+          - lambda-b
+          - lambda-c
+          - lambda-d
+          - lambda-e
