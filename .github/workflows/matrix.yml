@@ -4,9 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       lambda_name:
-        description: "Lambda to deploy (or 'all')"
+        description: "Select Lambda to deploy"
         required: true
         default: "all"
+        type: choice
+        options:
+          - all
+          - lambda-a
+          - lambda-b
+          - lambda-c
+          - lambda-d
+          - lambda-e
 
 jobs:
   deploy:
@@ -22,9 +30,12 @@ jobs:
           - lambda-e
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ✅ Skip non-selected lambdas
       - name: Skip if not selected
         if: ${{ github.event.inputs.lambda_name != 'all' && github.event.inputs.lambda_name != matrix.lambda }}
-        run: echo "Skipping ${{ matrix.lambda }}" && exit 0
+        run: |
+          echo "Skipping ${{ matrix.lambda }}"
+          exit 0
